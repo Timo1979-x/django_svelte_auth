@@ -1,0 +1,4 @@
+/docker/db/
+/env/
+/**/*.pyc
+/**/__pycache__/

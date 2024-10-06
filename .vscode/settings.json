@@ -5,7 +5,7 @@
     {
       "name": "",
       "depth": 10,
-      "includeAllSymbols": false
+      "includeAllSymbols": true
     }
   ]
 }

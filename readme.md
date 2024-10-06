@@ -9,10 +9,11 @@ apt install python3-dev default-libmysqlclient-dev build-essential pkg-config ma
 ```
 - [create project](https://www.django-rest-framework.org/tutorial/quickstart/) :
 ```bash
-mkdir django_vue && cd django_vue
+mkdir django_svelte_auth && cd django_svelte_auth
 python -m venv env
 source env/bin/activate
-pip install django djangorestframework mysql
+pip install django djangorestframework mysql jwt
+# pip install PyJWT
 django-admin startproject app .
 django-admin startapp core
 

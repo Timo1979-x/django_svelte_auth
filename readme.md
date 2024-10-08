@@ -5,7 +5,7 @@
 - install python3
 - install dependencies:
 ```
-apt install python3-dev default-libmysqlclient-dev build-essential pkg-config mariadb-client -y
+apt install python3-dev default-libmysqlclient-dev build-essential pkg-config mariadb-client python3.12-venv -y
 ```
 - [create project](https://www.django-rest-framework.org/tutorial/quickstart/) :
 ```bash

@@ -28,10 +28,9 @@ class LoginAPIView(APIView):
     email = request.data['email']
     password = request.data['password']
 
-    user = User.objects.filter(email=email).first()
+    user = User.objects.filter(email = email).first()
     if user is None or not user.check_password(password):
-      raise exceptions.AuthenticationFailed('Invalid credentials')
-      
+      raise exceptions.AuthenticationFailed('Invalid credentials')  
 
     access_token = create_access_token(user.id)
     refresh_token = create_refresh_token(user.id)

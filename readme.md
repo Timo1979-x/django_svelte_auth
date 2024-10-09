@@ -12,7 +12,7 @@ apt install python3-dev default-libmysqlclient-dev build-essential pkg-config ma
 mkdir django_svelte_auth && cd django_svelte_auth
 python -m venv env
 source env/bin/activate
-pip install django djangorestframework mysql jwt
+pip install django djangorestframework mysql jwt django-cors-headers
 # pip install PyJWT
 django-admin startproject app .
 django-admin startapp core

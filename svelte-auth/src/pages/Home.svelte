@@ -4,7 +4,7 @@
   let message = "You are not logged in";
 
   onMount(async () => {
-    const { data } = await axios.get("http://localhost:8000/api/user");
+    const { data } = await axios.get("user");
     message = `Hi ${data.first_name} ${data.last_name}`;
   });
 </script>

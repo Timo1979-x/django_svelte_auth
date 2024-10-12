@@ -5,14 +5,14 @@
     password = "";
   $: submit = async () => {
     const { data } = await axios.post(
-      "http://localhost:8000/api/login",
+      "login",
       {
         email,
         password,
       },
       { withCredentials: true },
     );
-    
+
     axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
     await push("/");

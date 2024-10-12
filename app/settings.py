@@ -116,6 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+  'EXCEPTION_HANDLER': 'core.exceptions.status_code_handler'
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

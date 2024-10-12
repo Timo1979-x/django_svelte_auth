@@ -1,3 +1,4 @@
+from urllib import response
 from django.shortcuts import render
 from rest_framework import exceptions
 from rest_framework.response import Response
@@ -57,3 +58,12 @@ class RefreshAPIView(APIView):
     return Response({
       'token': access_token,
     })
+
+class LogoutAPIView(APIView):
+  def post(self, request):
+    response = Response()
+    response.delete_cookie(key = 'refresh_token')
+    response.data = {
+      'message': 'success'
+    }
+    return response

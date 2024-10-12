@@ -41,5 +41,13 @@ def decode_access_token(token):
     print(e)
     raise exceptions.AuthenticationFailed('unauthenticated1')
 
+def decode_refresh_token(token):
+  try:
+    payload = JWT().decode(token, refresh_signing_key)
+    return payload['user_id']
+  except Exception as e:
+    print(e)
+    raise exceptions.AuthenticationFailed('unauthenticated1')
+
 def create_refresh_token(id):
   return create_token(id, refresh_signing_key, datetime.timedelta(days = 7))

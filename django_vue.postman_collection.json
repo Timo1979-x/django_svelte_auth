@@ -46,8 +46,8 @@
 					"script": {
 						"exec": [
 							"let token = pm.response.json().token;",
-							"console.log(token);",
-							"pm.collectionVariables.set(\"access_token\", token)"
+							"pm.collectionVariables.set(\"access_token\", token)",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -82,90 +82,53 @@
 					]
 				}
 			},
-			"response": [
+			"response": []
+		},
+		{
+			"name": "refresh",
+			"event": [
 				{
-					"name": "login",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"a@a.com\",\n    \"password\": \"a\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/login",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"login"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Date",
-							"value": "Sun, 06 Oct 2024 18:31:27 GMT"
-						},
-						{
-							"key": "Server",
-							"value": "WSGIServer/0.2 CPython/3.11.2"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Vary",
-							"value": "Accept, Cookie"
-						},
-						{
-							"key": "Allow",
-							"value": "POST, OPTIONS"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "DENY"
-						},
-						{
-							"key": "Content-Length",
-							"value": "163"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Set-Cookie",
-							"value": "refresh_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjogMSwgImV4cCI6IDE3Mjg4NDQyODcsICJpYXQiOiAxNzI4MjM5NDg3fQ.u533DgXfUrWB_0lp4cemeQV3IKBOs_k_g8uZAw4aSV0; HttpOnly; Path=/"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjogMSwgImV4cCI6IDE3MjgyMzk1MTcsICJpYXQiOiAxNzI4MjM5NDg3fQ.uo8x9jK0Rwx_RmJcVkSm27SHAyHohIgeqyREk15I6GA\"\n}"
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let token = pm.response.json().token;",
+							"pm.collectionVariables.set(\"access_token\", token)",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
 				}
-			]
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"a@a.com\",\n    \"password\": \"a\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/refresh",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"refresh"
+					]
+				}
+			},
+			"response": []
 		},
 		{
 			"name": "user",
@@ -194,90 +157,7 @@
 					]
 				}
 			},
-			"response": [
-				{
-					"name": "login",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"a@a.com\",\n    \"password\": \"a\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/login",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"login"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Date",
-							"value": "Sun, 06 Oct 2024 18:31:27 GMT"
-						},
-						{
-							"key": "Server",
-							"value": "WSGIServer/0.2 CPython/3.11.2"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Vary",
-							"value": "Accept, Cookie"
-						},
-						{
-							"key": "Allow",
-							"value": "POST, OPTIONS"
-						},
-						{
-							"key": "X-Frame-Options",
-							"value": "DENY"
-						},
-						{
-							"key": "Content-Length",
-							"value": "163"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
-						},
-						{
-							"key": "Set-Cookie",
-							"value": "refresh_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjogMSwgImV4cCI6IDE3Mjg4NDQyODcsICJpYXQiOiAxNzI4MjM5NDg3fQ.u533DgXfUrWB_0lp4cemeQV3IKBOs_k_g8uZAw4aSV0; HttpOnly; Path=/"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjogMSwgImV4cCI6IDE3MjgyMzk1MTcsICJpYXQiOiAxNzI4MjM5NDg3fQ.uo8x9jK0Rwx_RmJcVkSm27SHAyHohIgeqyREk15I6GA\"\n}"
-				}
-			]
+			"response": []
 		}
 	],
 	"variable": [

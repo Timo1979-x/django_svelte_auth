@@ -30,6 +30,7 @@ npx degit sveltejs/template svelte-auth
 cd svelte-auth
 npm i
 node scripts/setupTypeScript.js
+npm install svelte-spa-router
 npm i
 ```
 

@@ -129,7 +129,7 @@
 			"response": []
 		},
 		{
-			"name": "reset password",
+			"name": "forgot password",
 			"event": [
 				{
 					"listen": "test",
@@ -155,7 +155,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/reset",
+					"raw": "http://127.0.0.1:8000/api/forgot",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -166,7 +166,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"reset"
+						"forgot"
 					]
 				}
 			},

@@ -2,6 +2,7 @@ import datetime
 import random
 import string
 from urllib import response
+from django.core.mail import send_mail
 from django.shortcuts import render
 from rest_framework import exceptions
 from rest_framework.response import Response
@@ -89,14 +90,24 @@ class LogoutAPIView(APIView):
     }
     return response
 
-class ResetAPIView(APIView):
+class ForgotAPIView(APIView):
   def post(self, request):
+    email = request.data['email']
     token = ''.join(random.choice(string.ascii_lowercase + string.digits + string.ascii_uppercase) for _ in range(10))
 
     Reset.objects.create(
-      email = request.data['email'],
+      email = email,
       token = token
     )
+
+
+    url = 'http://localhost:3000/reset/' + token
+    send_mail(
+      subject = 'reset password', 
+      message = 'click <a href="%s">here</a> to reset your password' % url,
+      from_email = 'from@example.com',
+      recipient_list=[email])
+
     return Response({
       'message': 'success'
     })

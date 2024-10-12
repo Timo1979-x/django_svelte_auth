@@ -9,3 +9,14 @@ services:
       MYSQL_ROOT_PASSWORD: example
     ports:
       - "3306:3306"
+    # depends_on:
+    #   - mailer
+
+  mailer:
+      # image: mailhog/mailhog # only for arm64
+      # image: sashas777/mailhog:arm64v8 # only for arm64
+      image: dorayy/mailhog # ffdf
+      restart: unless-stopped
+      ports:
+          - "1025:1025"
+          - "8082:8025"

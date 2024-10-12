@@ -2,6 +2,7 @@
 [Course](https://www.udemy.com/course/svelte-django-authentication/)
 
 ## project setup
+### backend
 - install python3
 - install dependencies:
 ```
@@ -21,6 +22,15 @@ django-admin startapp core
 - run the project:
 ```
 python manage.py runserver
+```
+
+### Frontend
+```bash
+npx degit sveltejs/template svelte-auth
+cd svelte-auth
+npm i
+node scripts/setupTypeScript.js
+npm i
 ```
 
 ## Заметки

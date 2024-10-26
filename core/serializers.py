@@ -8,7 +8,7 @@ class UserSerializer(ModelSerializer):
     extra_kwargs = {
       'password': { 'write_only': True }
     }
-  
+
   def create(self, d):
     password = d.pop('password', None)
     instance = self.Meta.model(**d)

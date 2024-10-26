@@ -36,7 +36,7 @@ class LoginAPIView(APIView):
 
     user = User.objects.filter(email = email).first()
     if user is None or not user.check_password(password):
-      raise exceptions.AuthenticationFailed('Invalid credentials')  
+      raise exceptions.AuthenticationFailed('Invalid credentials')
 
     if user.tfa_secret:
       return Response({
@@ -53,22 +53,36 @@ class LoginAPIView(APIView):
 
 class TwoFactorAPIView(APIView):
   def post(self, request):
-    pass
-    # access_token = create_access_token(user.id)
-    # refresh_token = create_refresh_token(user.id)
+    id = request.data['id']
+    user = User.objects.filter(pk = id)
 
-    # UserToken.objects.create(
-    #   user_id = user.id,
-    #   token = refresh_token,
-    #   expired_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 7)
-    # )
+    if not user:
+      raise exceptions.AuthenticationFailed('Invalid credentials3')
 
-    # response = Response()
-    # response.set_cookie(key = 'refresh_token', value = refresh_token, httponly = True)
-    # response.data = {
-    #   'token': access_token,
-    # }
-    # return response
+    secret = user.tfa_secret if user.tfa_secret != '' else request.data['secret']
+
+    if not pyotp.TOTP(secret).verify(request.data['code']):
+      raise exceptions.AuthenticationFailed('Invalid credentials4')
+
+    if user.tfa_secret == '':
+      user.tfa_secret = secret
+      user.save()
+
+    access_token = create_access_token(id)
+    refresh_token = create_refresh_token(id)
+
+    UserToken.objects.create(
+      user_id = id,
+      token = refresh_token,
+      expired_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 7)
+    )
+
+    response = Response()
+    response.set_cookie(key = 'refresh_token', value = refresh_token, httponly = True)
+    response.data = {
+      'token': access_token,
+    }
+    return response
 
 class UserAPIView(APIView):
   authentication_classes = [JWTAuthentication]
@@ -117,7 +131,7 @@ class ForgotAPIView(APIView):
 
     url = 'http://localhost:8080/#/reset/' + token
     send_mail(
-      subject = 'reset password', 
+      subject = 'reset password',
       message = 'click <a href="%s">here</a> to reset your password' % url,
       from_email = 'from@example.com',
       recipient_list=[email])
@@ -125,13 +139,13 @@ class ForgotAPIView(APIView):
     return Response({
       'message': 'success'
     })
-  
+
 class ResetAPIView(APIView):
   def post(self, request):
     data = request.data
     if data['password'] != data['password_confirm']:
       raise exceptions.APIException('Passwords dont match!')
-    
+
     reset_password = Reset.objects.filter(token = data['token']).first()
 
     if not reset_password:
@@ -143,7 +157,7 @@ class ResetAPIView(APIView):
 
     user.set_password(data['password'])
     user.save()
-    
+
     return Response({
       'message': 'success'
     })

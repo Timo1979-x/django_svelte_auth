@@ -29,7 +29,7 @@ class JWTAuthentication(BaseAuthentication):
       user = User.objects.get(pk = id)
       return (user, None)
     raise exceptions.AuthenticationFailed('unauthenticated2')
-  
+
 def create_access_token(id):
   return create_token(id, access_signing_key, datetime.timedelta(seconds = 30))
 

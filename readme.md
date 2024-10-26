@@ -30,7 +30,7 @@ npx degit sveltejs/template svelte-auth
 cd svelte-auth
 npm i
 node scripts/setupTypeScript.js
-npm install svelte-spa-router axios
+npm install svelte-spa-router axios qrcode
 npm i
 ```
 

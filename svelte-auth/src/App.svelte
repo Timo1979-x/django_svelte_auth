@@ -13,17 +13,17 @@
   };
 
   let auth = false;
-  
+
   authenticated.subscribe((value) => {
     auth = value;
-    console.log(`set auth to ${auth}`)
+    console.log(`set auth to ${auth}`);
   });
 
   $: logout = async () => {
-    axios.post('logout', {}, { withCredentials: true });
-    axios.defaults.headers.common["Authorization"] = '';
+    axios.post("logout", {}, { withCredentials: true });
+    axios.defaults.headers.common["Authorization"] = "";
     authenticated.set(false);
-  }
+  };
 </script>
 
 <header class="p-3 text-bg-dark">
@@ -39,7 +39,12 @@
 
       {#if auth}
         <div class="text-end">
-          <a href="/login" use:link class="btn btn-outline-light me-2" on:click={logout}>Logout</a>
+          <a
+            href="/login"
+            use:link
+            class="btn btn-outline-light me-2"
+            on:click={logout}>Logout</a
+          >
         </div>
       {:else}
         <div class="text-end">

@@ -1,10 +1,13 @@
 <script>
   import axios from "axios";
   import { onMount } from "svelte";
-  let message = "You are not logged in";
+  let message = "You are not logged in!";
 
   onMount(async () => {
-    const { data } = await axios.get("user");
+    const response = await axios.get("user");
+    console.log(`Home.onMount response:`);
+    console.log(response);
+    let data = response.data;
     message = `Hi ${data.first_name} ${data.last_name}`;
   });
 </script>

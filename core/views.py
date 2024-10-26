@@ -54,17 +54,18 @@ class LoginAPIView(APIView):
 class TwoFactorAPIView(APIView):
   def post(self, request):
     id = request.data['id']
-    user = User.objects.filter(pk = id)
+    user = User.objects.filter(pk = id).first()
 
     if not user:
       raise exceptions.AuthenticationFailed('Invalid credentials3')
-
+    print("user is {user}".format(user = str(user)))
     secret = user.tfa_secret if user.tfa_secret != '' else request.data['secret']
 
     if not pyotp.TOTP(secret).verify(request.data['code']):
       raise exceptions.AuthenticationFailed('Invalid credentials4')
 
     if user.tfa_secret == '':
+      print("set new user secret {secret}".format(secret = str(secret)))
       user.tfa_secret = secret
       user.save()
 

@@ -1,6 +1,7 @@
 import datetime
 import random
 import string
+import pyotp
 from urllib import response
 from django.core.mail import send_mail
 from django.shortcuts import render
@@ -37,24 +38,37 @@ class LoginAPIView(APIView):
     if user is None or not user.check_password(password):
       raise exceptions.AuthenticationFailed('Invalid credentials')  
 
-    access_token = create_access_token(user.id)
-    refresh_token = create_refresh_token(user.id)
+    if user.tfa_secret:
+      return Response({
+        'id': user.id
+      })
+    secret = pyotp.random_base32()
+    otpauth_url = pyotp.totp.TOTP(secret).provisioning_uri(issuer_name = "My App")
+    return Response({
+      'id': user.id,
+      'secret': secret,
+      'otpauth_url': otpauth_url
+    })
 
-    UserToken.objects.create(
-      user_id = user.id,
-      token = refresh_token,
-      expired_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 7)
-    )
 
-    response = Response()
-    response.set_cookie(key = 'refresh_token', value = refresh_token, httponly = True)
-    response.data = {
-      'token': access_token,
-    }
-    return response
-  
-    # serializer = UserSerializer(user)
-    # return Response(serializer.data)
+class TwoFactorAPIView(APIView):
+  def post(self, request):
+    pass
+    # access_token = create_access_token(user.id)
+    # refresh_token = create_refresh_token(user.id)
+
+    # UserToken.objects.create(
+    #   user_id = user.id,
+    #   token = refresh_token,
+    #   expired_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 7)
+    # )
+
+    # response = Response()
+    # response.set_cookie(key = 'refresh_token', value = refresh_token, httponly = True)
+    # response.data = {
+    #   'token': access_token,
+    # }
+    # return response
 
 class UserAPIView(APIView):
   authentication_classes = [JWTAuthentication]

@@ -14,6 +14,9 @@ from .authentication import JWTAuthentication, create_access_token, create_refre
 from .models import Reset, User, UserToken
 from .serializers import UserSerializer
 
+from google.oauth2 import id_token
+from google.auth.transport.requests import Request as GoogleRequest
+
 
 # Create your views here.
 class RegisterAPIView(APIView):
@@ -162,3 +165,39 @@ class ResetAPIView(APIView):
     return Response({
       'message': 'success'
     })
+
+class GoogleAuthAPIView(APIView):
+  def post(self, request):
+    token = request.data['token']
+    googleUser = id_token.verify_token(token, GoogleRequest())
+
+    if not googleUser:
+      raise exceptions.AuthenticationFailed("unauthenticated G1")
+    
+    user = User.objects.filter(name = googleUser['email']).first()
+    if not user:
+      user = User.objects.create(
+        first_name = googleUser['given_name'],
+        last_name = googleUser['family_name'],
+        email = googleUser['email'],
+      )
+      user.set_password(token)
+      user.save()
+
+    id = user.id
+    access_token = create_access_token(id)
+    refresh_token = create_refresh_token(id)
+
+    UserToken.objects.create(
+      user_id = id,
+      token = refresh_token,
+      expired_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 7)
+    )
+
+    response = Response()
+    response.set_cookie(key = 'refresh_token', value = refresh_token, httponly = True)
+    response.data = {
+      'token': access_token,
+    }
+    return response
+    

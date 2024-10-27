@@ -13,7 +13,7 @@ apt install python3-dev default-libmysqlclient-dev build-essential pkg-config ma
 mkdir django_svelte_auth && cd django_svelte_auth
 python -m venv env
 source env/bin/activate
-pip install django djangorestframework mysql jwt django-cors-headers pyotp
+pip install django djangorestframework mysql jwt django-cors-headers pyotp google-auth
 # pip install PyJWT
 django-admin startproject app .
 django-admin startapp core
@@ -40,3 +40,19 @@ npm i
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+Для настройки учетных данных для аутентификации google нужно:
+  - зайти на https://console.cloud.google.com/cloud-resource-manager и создать новый проект My App
+  - зайти на https://console.cloud.google.com/apis/credentials/consent. Там настроить Consent screen:
+    - User type: External
+    - App name: My App
+    - user support email: выбрать из списка один из адресов
+    - developer contact email:
+  - зайти на страницу https://console.cloud.google.com/apis/credentials ("Credentials for APIs and services").
+  - Выбрать проект
+  - Нажать Create Credentials -> OAuth client ID:
+    - Application type: web
+    - name: My App
+    - Authorized JavaScript origins: http://127.0.0.1:8080, http://localhost:8080
+    - нажать Create
+    - записать client_id, client_secret

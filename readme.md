@@ -13,7 +13,7 @@ apt install python3-dev default-libmysqlclient-dev build-essential pkg-config ma
 mkdir django_svelte_auth && cd django_svelte_auth
 python -m venv env
 source env/bin/activate
-pip install django djangorestframework mysql jwt django-cors-headers pyotp google-auth
+pip install django djangorestframework mysql jwt django-cors-headers pyotp requests google-auth
 # pip install PyJWT
 django-admin startproject app .
 django-admin startapp core
@@ -35,6 +35,8 @@ npm i
 ```
 
 ## Заметки
+на 27.10.2024 библиотека для svelte @beyonk/svelte-social-auth не работает, ее нужно переделывать на новые google API, поэтому аутентификация в Google не взлетела
+
 После каждого изменения модели надо делать миграцию:
 ```
 python manage.py makemigrations
